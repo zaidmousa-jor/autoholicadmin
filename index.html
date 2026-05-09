@@ -533,14 +533,30 @@
         .btn-save { background: var(--accent-red); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
         .btn-cancel { background: transparent; color: var(--text-gray); border: 1px solid var(--table-border); padding: 10px 20px; border-radius: 6px; cursor: pointer; }
 
-        @media (max-width: 992px) {
-            .sidebar { transform: translateX(-100%); }
-            [dir="rtl"] .sidebar { transform: translateX(100%); }
-            .sidebar.open { transform: translateX(0); }
-            .close-sidebar-btn { display: block; }
-            .main-content { margin-left: 0; padding: 15px; }
-            [dir="rtl"] .main-content { margin-right: 0; }
-        }
+       @media (max-width: 992px) {
+    /* Hide the sidebar by default on mobile when it has the 'closed' class */
+    .sidebar.closed { 
+        transform: translateX(-100%); 
+    }
+    
+    /* Support for Arabic (RTL) mode */
+    [dir="rtl"] .sidebar.closed { 
+        transform: translateX(100%); 
+    }
+
+    /* Show the sidebar when the 'closed' class is removed */
+    .sidebar {
+        transform: translateX(0);
+        z-index: 5000; /* Keeps it above the map and calendar */
+    }
+
+    /* Make sure the main content takes up the full screen on mobile */
+    .main-content { 
+        margin-left: 0 !important; 
+        margin-right: 0 !important; 
+        padding: 15px; 
+    }
+}
     </style>
 </head>
 <body>
@@ -1279,9 +1295,14 @@
         };
 
         window.toggleMenu = function() {
-            document.getElementById('sidebar').classList.toggle('closed');
-            document.getElementById('main-content').classList.toggle('full-width');
-        };
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
+    
+    // This flips the 'closed' state on and off
+    sidebar.classList.toggle('closed');
+    // This handles the layout spacing for the main content
+    mainContent.classList.toggle('full-width');
+};
 
         window.switchView = function(viewId, element) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
