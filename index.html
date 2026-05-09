@@ -557,22 +557,52 @@
         padding: 15px; 
     }
 }
+        /* Hide it by default (Desktop) */
+.close-sidebar-btn {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: var(--text-white);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 5001;
+}
+
+/* Show it only on Mobile */
+@media (max-width: 992px) {
+    .close-sidebar-btn {
+        display: block;
+    }
+    
+    /* Optional: If your admin page is RTL (Arabic), move it to the left */
+    [dir="rtl"] .close-sidebar-btn {
+        right: auto;
+        left: 15px;
+    }
+}
     </style>
 </head>
 <body>
 
     <aside class="sidebar closed" id="sidebar">
-        <div class="sidebar-header">
-            <h2>Auto<span>Holic</span></h2>
-            <i class="fas fa-times close-sidebar-btn" onclick="toggleMenu()"></i>
+    <button class="close-sidebar-btn" onclick="toggleMenu()">
+        <i class="fas fa-times"></i>
+    </button>
+    
+    <div class="sidebar-header">
+        <h2>Auto<span>Holic</span></h2>
         </div>
-        <ul>
-            <li class="active" onclick="switchView('dashboard', this)" data-i18n="nav-dashboard"><i class="fas fa-home"></i> Dashboard</li>
-            <li onclick="switchView('all-bookings', this)" data-i18n="nav-all-bookings"><i class="fas fa-list"></i> All Bookings</li>
-            <li onclick="switchView('calendar', this)" data-i18n="nav-schedule"><i class="fas fa-calendar-day"></i> Schedule View</li>
-            <li onclick="switchView('analytics', this)" data-i18n="nav-analytics"><i class="fas fa-chart-line"></i> Analytics & Insights</li>
-        </ul>
-    </aside>
+
+    <ul>
+        <li class="active" onclick="switchView('dashboard', this)" data-i18n="nav-dashboard"><i class="fas fa-home"></i> Dashboard</li>
+        <li onclick="switchView('all-bookings', this)" data-i18n="nav-all-bookings"><i class="fas fa-list"></i> All Bookings</li>
+        <li onclick="switchView('calendar', this)" data-i18n="nav-schedule"><i class="fas fa-calendar-day"></i> Schedule View</li>
+        <li onclick="switchView('analytics', this)" data-i18n="nav-analytics"><i class="fas fa-chart-line"></i> Analytics & Insights</li>
+    </ul>
+</aside>
 
     <div class="main-content full-width" id="main-content">
         <div class="header">
